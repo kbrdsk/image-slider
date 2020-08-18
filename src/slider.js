@@ -45,7 +45,7 @@ function regressCarousel() {
 	carouselWindows.map(regressWindowPosition);
 }
 
-function advanceWindowPosition(carouselWindow) {
+function regressWindowPosition(carouselWindow) {
 	let positionIndex =
 		carouselPositions.indexOf(
 			carouselWindow.getAttribute("carousel-position")
@@ -60,7 +60,7 @@ function advanceWindowPosition(carouselWindow) {
 	);
 }
 
-function regressWindowPosition(carouselWindow) {
+function advanceWindowPosition(carouselWindow) {
 	let positionIndex =
 		carouselPositions.indexOf(
 			carouselWindow.getAttribute("carousel-position")
