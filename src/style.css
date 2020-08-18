@@ -5,6 +5,33 @@
 	height: 18vw;
 }
 
+.quick-nav-container{
+	position: absolute;
+	height: 10%;
+	width: 30%;
+	top: 75%;
+	left: 34%;
+	opacity: 0.7;
+	z-index: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.quick-nav-button{
+	width: 4%;
+	padding-top: 4%;
+	border-radius: 50%;
+	margin: 2%;
+	background-color: #000;
+	z-index: 1;
+}
+
+.quick-nav-button[highlighted=true]{
+	background-color: #777;
+}
+
 .nav-button {
 	position: absolute;
 	background: linear-gradient(

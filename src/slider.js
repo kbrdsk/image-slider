@@ -4,14 +4,22 @@ const carouselContainer = document.createElement("div");
 carouselContainer.classList.add("carousel-container");
 const carouselPositions = ["dblPrev", "prev", "view", "next", "dblNext"];
 const carouselWindows = Array(5).fill(null).map(createCarouselWindow);
+
 const advanceButton = document.createElement("div");
 advanceButton.classList.add("advance-button");
 advanceButton.classList.add("nav-button");
-advanceButton.addEventListener("click", advanceCarousel);
+advanceButton.addEventListener("click", () => {
+	advanceCarousel();
+	updateQuickNavHighlight();
+});
 const regressButton = document.createElement("div");
 regressButton.classList.add("regress-button");
 regressButton.classList.add("nav-button");
-regressButton.addEventListener("click", regressCarousel);
+regressButton.addEventListener("click", () => {
+	regressCarousel();
+	updateQuickNavHighlight();
+});
+
 let viewIndex = 2;
 
 const images = [];
@@ -23,7 +31,39 @@ function importImages(r) {
 }
 
 importImages(require.context("./images", false, /\.(png|jpe?g|svg)$/));
-console.log(images);
+
+const quickNavContainer = document.createElement("div");
+quickNavContainer.classList.add("quick-nav-container");
+for (let imageIndex = 0; imageIndex < images.length; imageIndex++) {
+	const quickNavButton = document.createElement("div");
+	quickNavButton.classList.add("quick-nav-button");
+	quickNavButton.addEventListener("click", () => {
+		jumpToIndex(imageIndex);
+		updateQuickNavHighlight();
+	});
+	quickNavContainer.appendChild(quickNavButton);
+}
+
+carouselContainer.appendChild(quickNavContainer);
+
+function updateQuickNavHighlight() {
+	const quickNavIndex = mod(viewIndex - 2, images.length);
+	const quickNavButtons = Array.from(
+		quickNavContainer.getElementsByClassName("quick-nav-button")
+	);
+	quickNavButtons.map((button, index) => {
+		if (index === quickNavIndex) button.setAttribute("highlighted", true);
+		else button.setAttribute("highlighted", false);
+	});
+}
+
+function jumpToIndex(imageIndex) {
+	viewIndex = imageIndex + 2;
+	carouselWindows.map((carouselWindow, index) => {
+		const carouselIndex = mod(imageIndex + index, images.length);
+		carouselWindow.style.backgroundImage = images[carouselIndex];
+	});
+}
 
 carouselWindows.map((carouselWindow, index) => {
 	carouselContainer.appendChild(carouselWindow);
