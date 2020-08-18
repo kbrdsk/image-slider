@@ -11,6 +11,7 @@ advanceButton.classList.add("nav-button");
 advanceButton.addEventListener("click", () => {
 	advanceCarousel();
 	updateQuickNavHighlight();
+	resetTimer();
 });
 const regressButton = document.createElement("div");
 regressButton.classList.add("regress-button");
@@ -18,7 +19,26 @@ regressButton.classList.add("nav-button");
 regressButton.addEventListener("click", () => {
 	regressCarousel();
 	updateQuickNavHighlight();
+	resetTimer();
 });
+
+let timer = 0;
+updateTimer();
+
+function updateTimer(){
+	if(timer === 5){
+		advanceCarousel();
+		timer = 0;
+	}
+	setTimeout(() => {
+		timer++;
+		updateTimer();
+	}, 1000);
+}
+
+function resetTimer(){
+	timer = 0;
+}
 
 let viewIndex = 2;
 
@@ -59,6 +79,7 @@ function updateQuickNavHighlight() {
 }
 
 function jumpToIndex(imageIndex) {
+	timer = 0;
 	viewIndex = imageIndex + 2;
 	Array.from(carouselContainer.getElementsByClassName("carousel-window")).map(
 		(carouselWindow) => {
