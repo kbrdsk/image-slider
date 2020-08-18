@@ -1,34 +1,67 @@
-.carousel-window{
+.carousel-container {
 	position: absolute;
-	width: 10vw;
-	height: 10vw;
-	background-size: contain;
-	background-repeat: no-repeat;
-	top: 10vw;
-	transition: all 0.5s ease-out;
-	background-position: center;
+	top: 10vh;
+	width: 90vw;
+	height: 18vw;
 }
 
-.carousel-window[carousel-position=dblPrev]{
+.nav-button {
+	position: absolute;
+	background: linear-gradient(
+		45deg,
+		rgba(0, 0, 0, 0),
+		rgba(0, 0, 0, 0) 45%,
+		rgba(0, 0, 0, 0.6) 45%,
+		rgba(0, 0, 0, 0.6)
+	);
+	z-index: 1;
+	height: 20%;
+	width: 4%;
+	top: 30%;
+	border-radius: 3px;
+}
+
+.advance-button {
+	left: 66%;
+	transform: rotate(45deg);
+}
+
+.regress-button {
+	left: 28%;
+	transform: rotate(225deg);
+}
+
+.carousel-window {
+	position: absolute;
+	width: 17%;
+	height: 85%;
+	background-size: contain;
+	background-repeat: no-repeat;
+	transition: all 0.5s ease-out;
+	background-position: center;
+	z-index: 0;
+}
+
+.carousel-window[carousel-position="dblPrev"] {
 	left: 0;
 	opacity: 0;
 }
 
-.carousel-window[carousel-position=prev]{
-	left: 12vw;
+.carousel-window[carousel-position="prev"] {
+	left: 20%;
 	opacity: 0.1;
 }
 
-.carousel-window[carousel-position=view]{
-	left: 24vw;
+.carousel-window[carousel-position="view"] {
+	left: 40%;
 }
 
-.carousel-window[carousel-position=next]{
-	left: 36vw;
+.carousel-window[carousel-position="next"] {
+	left: 60%;
 	opacity: 0.1;
 }
 
-.carousel-window[carousel-position=dblNext]{
-	left: 48vw;
+.carousel-window[carousel-position="dblNext"] {
+	left: 80%;
 	opacity: 0;
 }

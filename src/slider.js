@@ -1,12 +1,16 @@
 import "./style.css";
 
+const carouselContainer = document.createElement("div");
+carouselContainer.classList.add("carousel-container");
 const carouselPositions = ["dblPrev", "prev", "view", "next", "dblNext"];
 const carouselWindows = Array(5).fill(null).map(createCarouselWindow);
-const advanceButton = document.createElement("button");
-advanceButton.textContent = "Next";
+const advanceButton = document.createElement("div");
+advanceButton.classList.add("advance-button");
+advanceButton.classList.add("nav-button");
 advanceButton.addEventListener("click", advanceCarousel);
-const regressButton = document.createElement("button");
-regressButton.textContent = "Prev";
+const regressButton = document.createElement("div");
+regressButton.classList.add("regress-button");
+regressButton.classList.add("nav-button");
 regressButton.addEventListener("click", regressCarousel);
 let viewIndex = 2;
 
@@ -22,12 +26,13 @@ importImages(require.context("./images", false, /\.(png|jpe?g|svg)$/));
 console.log(images);
 
 carouselWindows.map((carouselWindow, index) => {
-	document.body.appendChild(carouselWindow);
+	carouselContainer.appendChild(carouselWindow);
 	carouselWindow.setAttribute("carousel-position", carouselPositions[index]);
 	carouselWindow.style.backgroundImage = images[index];
 });
-document.body.appendChild(regressButton);
-document.body.appendChild(advanceButton);
+document.body.appendChild(carouselContainer);
+carouselContainer.appendChild(regressButton);
+carouselContainer.appendChild(advanceButton);
 
 function createCarouselWindow() {
 	const carouselWindow = document.createElement("div");
