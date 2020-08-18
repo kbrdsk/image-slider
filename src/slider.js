@@ -2,32 +2,32 @@ import "./style.css";
 
 const carouselPositions = ["dblPrev", "prev", "view", "next", "dblNext"];
 const carouselWindows = Array(5).fill(null).map(createCarouselWindow);
-const images = [
-	"grey",
-	"red",
-	"blue",
-	"brown",
-	"green",
-	"purple",
-	"pink",
-	"yellow",
-	"orange",
-];
 const advanceButton = document.createElement("button");
 advanceButton.textContent = "Next";
 advanceButton.addEventListener("click", advanceCarousel);
 const regressButton = document.createElement("button");
 regressButton.textContent = "Prev";
 regressButton.addEventListener("click", regressCarousel);
-let viewIndex = 3;
+let viewIndex = 2;
+
+const images = [];
+
+function importImages(r) {
+	r.keys().forEach((key) =>
+		images.push("url(." + r(key).default.match(/(?<=^\/dist).+/)[0] + ")")
+	);
+}
+
+importImages(require.context("./images", false, /\.(png|jpe?g|svg)$/));
+console.log(images);
 
 carouselWindows.map((carouselWindow, index) => {
 	document.body.appendChild(carouselWindow);
 	carouselWindow.setAttribute("carousel-position", carouselPositions[index]);
-	carouselWindow.backgroundColor = images[index];
+	carouselWindow.style.backgroundImage = images[index];
 });
-document.body.appendChild(advanceButton);
 document.body.appendChild(regressButton);
+document.body.appendChild(advanceButton);
 
 function createCarouselWindow() {
 	const carouselWindow = document.createElement("div");
@@ -80,7 +80,7 @@ function updateBackground(carouselWindow, direction) {
 		direction === "advancing"
 			? mod(viewIndex - 2, images.length)
 			: mod(viewIndex + 2, images.length);
-	carouselWindow.style.backgroundColor = images[imageIndex];
+	carouselWindow.style.backgroundImage = images[imageIndex];
 }
 
 function mod(n, m) {
