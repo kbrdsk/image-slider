@@ -45,6 +45,7 @@ for (let imageIndex = 0; imageIndex < images.length; imageIndex++) {
 }
 
 carouselContainer.appendChild(quickNavContainer);
+updateQuickNavHighlight();
 
 function updateQuickNavHighlight() {
 	const quickNavIndex = mod(viewIndex - 2, images.length);
@@ -59,10 +60,15 @@ function updateQuickNavHighlight() {
 
 function jumpToIndex(imageIndex) {
 	viewIndex = imageIndex + 2;
-	carouselWindows.map((carouselWindow, index) => {
-		const carouselIndex = mod(imageIndex + index, images.length);
-		carouselWindow.style.backgroundImage = images[carouselIndex];
-	});
+	Array.from(carouselContainer.getElementsByClassName("carousel-window")).map(
+		(carouselWindow) => {
+			const index = carouselPositions.indexOf(
+				carouselWindow.getAttribute("carousel-position")
+			);
+			const carouselIndex = mod(imageIndex + index, images.length);
+			carouselWindow.style.backgroundImage = images[carouselIndex];
+		}
+	);
 }
 
 carouselWindows.map((carouselWindow, index) => {
