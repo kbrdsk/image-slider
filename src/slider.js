@@ -8,19 +8,11 @@ const carouselWindows = Array(5).fill(null).map(createCarouselWindow);
 const advanceButton = document.createElement("div");
 advanceButton.classList.add("advance-button");
 advanceButton.classList.add("nav-button");
-advanceButton.addEventListener("click", () => {
-	advanceCarousel();
-	updateQuickNavHighlight();
-	resetTimer();
-});
+advanceButton.addEventListener("click", advanceCarousel);
 const regressButton = document.createElement("div");
 regressButton.classList.add("regress-button");
 regressButton.classList.add("nav-button");
-regressButton.addEventListener("click", () => {
-	regressCarousel();
-	updateQuickNavHighlight();
-	resetTimer();
-});
+regressButton.addEventListener("click", regressCarousel);
 
 let timer = 0;
 updateTimer();
@@ -28,7 +20,6 @@ updateTimer();
 function updateTimer(){
 	if(timer === 5){
 		advanceCarousel();
-		timer = 0;
 	}
 	setTimeout(() => {
 		timer++;
@@ -110,11 +101,15 @@ function createCarouselWindow() {
 function advanceCarousel() {
 	viewIndex = mod(viewIndex + 1, images.length);
 	carouselWindows.map(advanceWindowPosition);
+	updateQuickNavHighlight();
+	resetTimer();
 }
 
 function regressCarousel() {
 	viewIndex = mod(viewIndex - 1, images.length);
 	carouselWindows.map(regressWindowPosition);
+	updateQuickNavHighlight();
+	resetTimer();
 }
 
 function regressWindowPosition(carouselWindow) {
